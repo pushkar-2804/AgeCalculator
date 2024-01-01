@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Age Calculator</title>
+    <style type="text/css">
+      #age {
+        font-weight: bolder;
+      }
+      .active {
+        text-align: center;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 40px;
+      }
+      .remove {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="wrapper">
+      <p id="age"></p>
+      <input type="datetime-local" name="dateofbitrth" id="dob" />
+      <button onclick="changeFlag()" id="button"></button>
+    </div>
+    <script>
+      //   console.log(currentTime);
+      const textAge = document.getElementById("age");
+      const button = document.getElementById("button");
+      const initialText = "Enter your Date of Birth";
+      const initialBtnText = "Calculate";
+      button.innerHTML = initialBtnText;
+      textAge.innerHTML = initialText;
+      let flag = false;
+      function changeFlag() {
+        flag ? (flag = false) : (flag = true);
+      }
+      function calculateAge() {
+        if (flag) {
+          const age = document.getElementById("dob");
+          const currentTime = Date.now();
+          const updatedDate = new Date(age.value);
+          textAge.classList.add("active");
+          button.innerHTML = "Reset";
+          const calcVal =
+            (currentTime - updatedDate) / (60 * 60 * 24 * 365.25 * 1000);
+          textAge.innerHTML = calcVal;
+          age.classList.add("remove");
+        } else {
+          const age = document.getElementById("dob");
+          textAge.innerHTML = initialText;
+          textAge.classList.remove("active");
+          age.classList.remove("remove");
+          button.innerHTML = "Calculate";
+        }
+      }
+
+      setInterval(calculateAge, 100);
+    </script>
+  </body>
+</html>
